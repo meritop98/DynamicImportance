@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="DynamicImportance: Consistent, Dynamic, and Extendable Long Video Generation from Text.">
+  <meta name="keywords" content="DynamicImportance">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DynamicImportance: Consistent, Dynamic, and Extendable Long Video Generation from Text</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <style>
+    .inline-equation {
+      display: inline-block;
+      vertical-align: middle;
+    }
+  </style>
+
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.png">
+
+  <style>  
+    table {  
+      font-family: arial, sans-serif;  
+      border-collapse: collapse;  
+      width: 100%;  
+    }  
+      
+    td, th {  
+      border: 2px solid #F1F4F5;  
+      text-align: left;  
+      padding: 8px;  
+    }  
+    
+    tr:nth-child(3n - 1) {  
+      background-color: #F1F4F5;  
+    }  
+
+    tr:nth-child(3n) {  
+      border: 2px solid #FFFFFF;
+    }  
+  </style>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title"> DynamicImportance: <br> Interactive Assignment of Word Significance in a
+Generalist Vision Model </h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://www.linkedin.com/in/meri-topuzyan-606047191/">Meri Topuzyan</a><sup> </sup>,</span>
+            </span>
+            <span class="author-block">
+              <a href="https://levon-kh.github.io/">Levon Khachatryan</a><sup>*</sup></span>
+            </span><br>
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup> </sup>Yerevan State University, </span>
+            <span class="author-block"><sup> </sup>Picsart</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <!-- <span class="link-block">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span> -->
+<!--              <span class="link-block">-->
+<!--                &lt;!&ndash; FIX THE LINK &ndash;&gt;-->
+<!--                <a href="https://arxiv.org/abs/2403.14773"-->
+<!--                   class="external-link button is-normal is-rounded is-dark">-->
+<!--                  <span class="icon">-->
+<!--                      <i class="ai ai-arxiv"></i>-->
+<!--                  </span>-->
+<!--                  <span>arXiv</span>-->
+<!--                </a>-->
+<!--              </span>-->
+<!--              &lt;!&ndash; Video Link. &ndash;&gt;-->
+<!--              <span class="link-block">-->
+<!--                <a href="https://www.youtube.com/watch?v=GDPP0zmFmQg"-->
+<!--                   class="external-link button is-normal is-rounded is-dark">-->
+<!--                  <span class="icon">-->
+<!--                      <i class="fab fa-youtube"></i>-->
+<!--                  </span>-->
+<!--                  <span>Video</span>-->
+<!--                </a>-->
+<!--              </span>-->
+<!--              &lt;!&ndash; Code Link. &ndash;&gt;-->
+<!--              <span class="link-block">-->
+<!--                <a href="https://github.com/Picsart-AI-Research/StreamingT2V"-->
+<!--                   class="external-link button is-normal is-rounded is-dark">-->
+<!--                  <span class="icon">-->
+<!--                      <i class="fab fa-github"></i>-->
+<!--                  </span>-->
+<!--                  <span>Code</span>-->
+<!--                  </a>-->
+<!--              </span>-->
+<!--              &lt;!&ndash; Demo Link. &ndash;&gt;-->
+<!--              <span class="link-block">-->
+<!--                <a href="https://huggingface.co/spaces/PAIR/StreamingT2V"-->
+<!--                   class="external-link button is-normal is-rounded is-dark">-->
+<!--                  <span class="icon">-->
+<!--                    <img src="./static/images/hf.png" alt="Button Image">-->
+<!--                  </span>-->
+<!--                  <span>Demo</span>-->
+<!--                  </a>-->
+<!--            </div>-->
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <img id="teaser" autoplay muted loop playsinline height="100%" src="./static/images/teaser.jpg" style="width:100%;height:100%;">
+      <p class="subtitle has-text-centered">
+        <b><span class="dnerf">DynamicImportance</span></b>  introduces a transformative method to refine how textual prompts influence image synthesis in vision-based AI models, specifically within the InstructDiffusion framework. This novel approach dynamically adjusts the importance assigned to specific words within textual prompts, directly impacting the attention mechanisms of the model. This results in more accurate and contextually relevant image outputs that closely align with human instructions, thereby advancing the model's utility in practical and research applications.
+      </p>
+    </div>
+  </div>
+</section>
+
+
+<section class="section b-section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            The <span class="dnerf">Recent advancements in Deep Learning have markedly expanded the potential for creating a generic model for various vision tasks. At the forefront, <span class="dnerf">InstructDiffusion</span> presented a unified framework for aligning various computer vision tasks with human instructions (textual prompts). The model can handle a variety of vision tasks, including understanding tasks (such as segmentation and keypoint detection) and generative tasks (such as editing and enhancement). It is built upon the diffusion process and is trained to predict pixels according to user instructions, such as "encircling the man's left shoulder in red." (keypoint detection) or "applying a blue mask to the left car." (segmentation). However, not all words in the given textual prompt hold equal importance. Certain indicator words (e.g. "left shoulder" in the previous example) require more emphasis than others. To address this limitation, we propose DynamicImportance, a post-hoc method inspired by <span class="dnerf">Attend-and-Excite</span>. This technique conducts On-the-Fly optimization to direct the model in refining the cross-attention units based on the specified weights assigned to each word. The mechanism selectively enhances relevant features and suppresses less informative ones, thereby refining the model's focus during the image editing process. By dynamically adjusting to the content specified in text instructions, it allows for more nuanced and context-aware modifications of images. This strategic enhancement in attention processing not only improves the model's interpretability of textual instructions but also significantly boosts the precision and coherence of the resultant image edits. Our novel attention-augmented InstructDiffusion model, therefore, represents a symbiosis of interpretative and generative capabilities, paving the way for more intuitive and human-like editing performances in AI-driven systems.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+
+    <!-- Paper video. -->
+    <!-- <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Video</h2>
+        <div class="publication-video">
+          <iframe src="https://www.youtube.com/embed/MrKrnHhk8IA?rel=0&amp;showinfo=0"
+                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div> -->
+
+    <!-- <video id="teaser" autoplay muted loop playsinline height="100%"> -->
+
+
+    <!--/ Paper video. -->
+  </div>
+</section>
+
+<!-- 
+<section class="section">
+  <div class="container is-max-desktop">
+    <video id="replay-video"
+                 controls
+                 muted
+                 preload
+                 playsinline
+                 height="100%">
+      <source src="./static/videos/StreamingT2V.mp4"
+              type="video/mp4">
+    </video>
+  </div>
+</section>
+ -->
+
+<!--<section class="section" id="Method">-->
+<!--  <div class="container is-max-desktop content">-->
+<!--    <h2 class="title">Method</h2>-->
+<!--    <section class="hero method">-->
+<!--      <div class="container is-max-desktop">-->
+<!--        <div class="hero-body">-->
+<!--          <img id="method" autoplay muted loop playsinline height="100%" src="./static/images/method.png" style="width:100%;height:80%;">-->
+<!--          <p>-->
+<!--              Attention Mechanism Enhancement: <span class="dnerf">DynamicImportance</span>  enhances the model’s attention mechanisms by implementing Attend-and-Excite strategies that focus on real-time adjustments based on the weighted significance of words in the textual prompt.-->
+<!--          <p>-->
+<!--          <p>-->
+<!--            Algorithmic Implementation: The method operates by integrating an additional layer within the InstructDiffusion’s architecture that recalibrates attention distributions dynamically, aligning more closely with the intent articulated in the text prompts.-->
+<!--          </p>-->
+
+<!--        </div>-->
+<!--      </div>-->
+<!--    </section>-->
+<!--  </div>-->
+<!--</section>-->
+
+<section class="section b-section" id="Method-Detailed">
+  <div class="container is-max-desktop content">
+    <h2 class="title">Method</h2>
+    <section class="hero method">
+      <div class="container is-max-desktop">
+        <div class="hero-body">
+          <p>
+              Attention Mechanism Enhancement: <span class="dnerf">DynamicImportance</span>  enhances the model’s attention mechanisms by implementing Attend-and-Excite strategies that focus on real-time adjustments based on the weighted significance of words in the textual prompt.
+<!--          <p>-->
+<!--          <p>-->
+<!--            Algorithmic Implementation: The method operates by integrating an additional layer within the InstructDiffusion’s architecture that recalibrates attention distributions dynamically, aligning more closely with the intent articulated in the text prompts.-->
+          </p>
+          <img id="method" autoplay muted loop playsinline height="100%" src="./static/images/diagram.jpg" style="width:100%;height:80%;">
+            <p>
+              Text Parsing and Weight Assignment: The model parses input text and assigns dynamic weights to different words based on their semantic importance to the task.
+            <p>
+              Attention Modulation: Based on these weights, the model's attention mechanisms are adjusted to enhance the representation of critical features in the image synthesis process.
+            </p>
+              Image Synthesis: The adjusted attention weights influence the diffusion process, ensuring that the generated images more accurately reflect the detailed nuances of the input text.
+            </p>
+
+        </div>
+      </div>
+    </section>
+  </div>
+</section>
+
+<section class="section" id="Key Features">
+  <div class="container is-max-desktop content">
+    <h2 class="title">Key Features</h2>
+    <section class="hero method">
+      <div class="container is-max-desktop">
+        <div class="hero-body">
+          <ul>
+            <li>
+              <strong>Interactive Word Significance Assignment</strong>
+              <p>Users can actively influence the model's attention by specifying the importance of terms within the textual prompt. This interactive feature ensures that the model aligns closely with user intentions, enhancing the customization and relevance of the image generation process. The integration of your modifications has significantly reduced any previous inconsistencies in how the model prioritized text, ensuring a much more precise adherence to user-defined importance.</p>
+            </li>
+            <li>
+              <strong>Real-Time Attention Adjustment</strong>
+              <p>The model dynamically adjusts its focus on image areas that are directly relevant to the textual cues provided. This capability significantly enhances the specificity and accuracy of the generated images, ensuring that they are both high-quality and aligned with the input text. With the improvements implemented, the model now exhibits superior performance in maintaining focus on the intended areas without any localization errors, thereby improving the reliability and applicability of the generated images.</p>
+            </li>
+            <li>
+              <strong>Context-Aware Image Synthesis</strong>
+              <p>This feature enables the model to consider contextual information from the image itself, such as scene layout and existing objects. By understanding the context in which textual cues are placed, the model can make more informed decisions, leading to more coherent and contextually appropriate outputs. The enhancements you've added allow the model to better interpret and integrate contextual cues, virtually eliminating past issues related to out-of-context synthesis and enhancing the overall fidelity and applicability of the edits.</p>
+            </li>
+          </ul>
+
+        </div>
+      </div>
+    </section>
+  </div>
+</section>
+
+
+
+<!-- <section class="section b-section" id="Method-Detailed">
+  <div class="container is-max-desktop content">
+    <h2 class="title" onclick="toggleDetails()">
+      Detailed Method Pipeline 
+      <span id="triangle">▼</span>
+    </h2>
+    <div id="detailed-content" style="display: none;">
+      <section class="hero method">
+        <div class="container is-max-desktop">
+          <div class="hero-body">
+            <img id="method" autoplay muted loop playsinline height="100%" src="./static/images/method_detailed.png" style="width:100%;height:80%;">
+            <p>
+              Method overview: <span class="dnerf">StreamingT2V</span> extends a video diffusion model (VDM) by the conditional attention module (CAM) as short-term memory,  and the appearance preservation module (APM) as long-term memory. CAM conditions the VDM on the previous chunk using a frame encoder <span class="inline-equation">$$\mathcal{E}_{\mathrm{cond}}$$</span>.<br> The attentional mechanism of CAM leads to smooth transitions between chunks and  videos with high motion amount at the same time. APM extracts from an anchor frame high-level image features and injects it to the text cross-attentions of the VDM. APM helps to  preserve object/scene features across the autogressive video generation.
+            </p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</section> 
+-->
+
+<!-- <script>
+  function toggleDetails() {
+    var content = document.getElementById("detailed-content");
+    var triangle = document.getElementById("triangle");
+    if (content.style.display === "none") {
+      content.style.display = "block";
+      triangle.innerHTML = "▲"; // Change triangle icon to point up
+    } else {
+      content.style.display = "none";
+      triangle.innerHTML = "▼"; // Change triangle icon to point down
+    }
+  }
+</script> -->
+
+<!-- <section class="section" id="Method-Detailed">
+  <div class="container is-max-desktop content">
+    <h2 class="title">Method Detailed</h2>
+    <section class="hero method">
+      <div class="container is-max-desktop">
+        <div class="hero-body">
+          <img id="method" autoplay muted loop playsinline height="100%" src="./static/images/t2v-v8.png" style="width:100%;height:80%;">
+          <p>
+            Method overview: <span class="dnerf">StreamingT2V</span> extends a video diffusion model (VDM) by the conditional attention module (CAM) as short-term memory,  and the appearance preservation module (APM) as long-term memory. CAM conditions the VDM on the previous chunk using a frame encoder <span class="inline-equation">$$\mathcal{E}_{\mathrm{cond}}$$</span>.<br> The attentional mechanism of CAM leads to smooth transitions between chunks and videos with high motion amount at the same time. APM extracts from an anchor frame high-level image features and injects it to the text cross-attentions of the VDM. APM helps to preserve object/scene features across the autogressive video generation.
+          </p>
+        </div>
+      </div>
+    </section>
+  </div>
+</section> -->
+
+
+<!--<section class="section " id="Results">-->
+<!--  <div class="container is-max-desktop content">-->
+<!--    <h2 class="title">Results</h2>-->
+<!--    <section class="hero method">-->
+<!--    <div class="container is-max-desktop">-->
+<!--    <div class="hero-body">-->
+
+<!--    <h3 class="title">1200 FRAMES @ 2 MINUTES</h3>-->
+<!--    <table class="center">-->
+<!--      <tr><td></td><td></td><td></td><td></td></tr>-->
+<!--      <tr>-->
+<!--        <td><video src="./static/videos/1200/0002_0000_Explore_the_coral_gardens_of_the_sea__wi.mp4" controls></video></td>-->
+<!--        <td><video src="./static/videos/1200/0003_0000_Camera_moving_in_a_wide_bright_ice_cave,.mp4" controls></video></td>-->
+<!--        <td><video src="./static/videos/1200/0004_0000_Experience_the_dance_of_jellyfish__float.mp4" controls></video></td>-->
+<!--        <td><video src="./static/videos/1200/0005_0000_Wide_shot_of_battlefield,_stormtroopers_.mp4" controls></video></td>-->
+<!--      </tr>-->
+<!--      <tr>-->
+<!--        <td width=25% style="text-align:center;">"Explore the coral gardens of the sea..."</td>-->
+<!--        <td width=25% style="text-align:center;">"Camera moving in a wide bright ice cave."</td>-->
+<!--        <td width=25% style="text-align:center;">"Experience the dance of jellyfish..."</td>-->
+<!--        <td width=25% style="text-align:center;">"Wide shot of battlefield, stormtroopers running..."</td>-->
+<!--      </tr>-->
+<!--      <tr><td></td><td></td><td></td><td></td></tr>-->
+<!--    </table>-->
+
+<!--    <h3 class="title">600 FRAMES @ 1 MINUTE</h3>-->
+<!--    <table class="center">-->
+<!--      <tr><td></td><td></td><td></td><td></td></tr>-->
+<!--      <tr>-->
+<!--        <td><video src="./static/videos/600/0000_0000_Camera_following_a_pack_of_crows_flying_.mp4" controls></video></td>-->
+<!--        <td><video src="./static/videos/600/0000_0000_Marvel_at_the_diversity_of_bee_species_short.mp4" controls></video></td>-->
+<!--        <td><video src="./static/videos/600/0001_0000_Close_flyover_over_a_large_wheat_field_i.mp4" controls></video></td>-->
+<!--        <td><video src="./static/videos/600/0006_0000_Camera_moving_down_into_colorful_coral_r_short.mp4" controls></video></td>-->
+<!--      </tr>-->
+<!--      <tr>-->
+<!--        <td width=25% style="text-align:center;">"Camera following a pack of crows flying in the sky."</td>-->
+<!--        <td width=25% style="text-align:center;">"Marvel at the diversity of bee species..."</td>-->
+<!--        <td width=25% style="text-align:center;">"Close flyover over a large wheat field..."</td>-->
+<!--        <td width=25% style="text-align:center;">"Camera moving down into colorful coral reefs..."</td>-->
+<!--      </tr>-->
+<!--      <tr><td></td><td></td><td></td><td></td></tr>-->
+<!--    </table>-->
+
+<!--    <h3 class="title">240 FRAMES @ 24 SECONDS</h3>-->
+<!--    <table class="center">-->
+<!--      <tr><td></td><td></td><td></td></tr>-->
+<!--      <tr>-->
+<!--        <td><video src="./static/videos/240/0023_0000_Fluids_mixing_and_changing_colors,_close.mp4"  controls></video></td>-->
+<!--        <td><video src="./static/videos/240/0009_0000_Santa_Claus_is_dancing.mp4" controls></video></td>-->
+<!--        <td><video src="./static/videos/240/0018_0000_Explosion,_burning,_smoke,_bomb,_nuclear.mp4" controls></video></td>-->
+<!--      </tr>-->
+<!--      <tr>-->
+<!--        <td width=25% style="text-align:center;">"Fluids mixing and changing colors."</td>-->
+<!--        <td width=25% style="text-align:center;">"Santa Claus is dancing."</td>-->
+<!--        <td width=25% style="text-align:center;">"Explosion."</td>-->
+<!--      </tr>-->
+<!--      <tr><td></td><td></td><td></td></tr>-->
+<!--      <tr>-->
+<!--        <td><video src="./static/videos/240/0027_0000_Flying_through_nebulas_and_stars.mp4" controls></video></td>-->
+<!--        <td><video src="./static/videos/240/0035_0000_Camera_moving_closely_over_beautiful_ros.mp4" controls></video></td>-->
+<!--        <td><video src="./static/videos/240/0044_0000_Documenting_the_growth_cycle_of_vibrant_.mp4" controls></video></td>-->
+<!--      </tr>-->
+<!--      <tr>-->
+<!--        <td width=25% style="text-align:center;">"Flying through nebulas and stars."</td>-->
+<!--        <td width=25% style="text-align:center;">"Camera moving closely over beautiful roses blooming timelapse."</td>-->
+<!--        <td width=25% style="text-align:center;">"Documenting the growth cycle of vibrant lavender flowers..."</td>-->
+<!--      </tr>-->
+<!--      <tr><td></td><td></td><td></td></tr>-->
+<!--    </table>-->
+<!--    -->
+<!--    <h3 class="title">80 FRAMES @ 8 SECONDS</h3>-->
+<!--    <table class="center">-->
+<!--      <tr><td></td><td></td><td></td><td></td></tr>-->
+<!--      <tr>-->
+<!--        <td><video src="./static/videos/80/0005_0000_Ants,_beetles_and_centipede_nest.mp4" controls></video></td>-->
+<!--        <td><video src="./static/videos/80/0021_0000_Fishes_swimming_in_ocean_camera_moving,_.mp4" controls></video></td>-->
+<!--        <td><video src="./static/videos/80/0022_0000_A_squirrel_in_Antarctica,_on_a_pile_of_h.mp4" controls></video></td>-->
+<!--        <td><video src="./static/videos/80/0023_0000_Enter_the_fascinating_world_of_bees__exp.mp4" controls></video></td>-->
+<!--      </tr>-->
+<!--      <tr>-->
+<!--        <td width=25% style="text-align:center;">"Ants, beetles and centipede nest."</td>-->
+<!--        <td width=25% style="text-align:center;">"Fishes swimming in ocean camera moving."</td>-->
+<!--        <td width=25% style="text-align:center;">"A squirrel on a table full of big nuts."</td>-->
+<!--        <td width=25% style="text-align:center;">"Enter the fascinating world of bees..."</td>-->
+<!--      </tr>-->
+<!--      <tr><td></td><td></td><td></td><td></td></tr>-->
+<!--      <tr>-->
+<!--        <td><video src="./static/videos/80/0030_0000_A_hummingbird_flutters_among_colorful_fl.mp4" controls></video></td>-->
+<!--        <td><video src="./static/videos/80/0033_0000_Drone_fly_to_a_mansion_in_a_tropical_for.mp4" controls></video></td>-->
+<!--        <td><video src="./static/videos/80/0041_0000_Aerial__flying_above_a_breathtaking_lime.mp4" controls></video></td>-->
+<!--        <td><video src="./static/videos/80/0046_0000_Beneath_the_majestic_Northern_Lights_of_.mp4" controls></video></td>-->
+<!--      </tr>-->
+<!--      <tr>-->
+<!--        <td width=25% style="text-align:center;">"A hummingbird flutters among colorful flowers..."</td>-->
+<!--        <td width=25% style="text-align:center;">"Drone fly to a mansion in a tropical forest."</td>-->
+<!--        <td width=25% style="text-align:center;">"Flying above a breathtaking limestone structure..."</td>-->
+<!--        <td width=25% style="text-align:center;">"Beneath the majestic Northern Lights of Iceland."</td>-->
+<!--      </tr>-->
+<!--      <tr><td></td><td></td><td></td><td></td></tr>-->
+<!--    </table>-->
+
+<!--  </div></div></section>-->
+<!--  </div>-->
+<!--</section>-->
+
+<!-- 
+<section class="section b-section" id='RelatedLinks'>
+  <div class="container is-max-desktop content">
+    <h2 class="title">Related Links</h2>
+    <ul>
+      <li><a href="https://modelscope.cn/models/iic/text-to-video-synthesis/summary">Modelscope</a></li>
+      <li><a href="https://github.com/lllyasviel/ControlNet">Adding Conditional Control to Text-to-Image Diffusion Models (a.k.a ControlNet)</a></li>
+      <li><a href="https://github.com/huggingface/diffusers">🤗 Diffusers</a></li>
+      <li><a href="https://github.com/Doubiiu/DynamiCrafter">DynamiCrafter: Animating Open-domain Images with Video Diffusion Priors</a></li>
+    </ul>
+  </div></section>
+  </div>
+</section>
+ -->
+<section class="section" id="Conclusion">
+  <div class="container is-max-desktop content">
+    <h2 class="title">Conclusion</h2>
+    <section class="hero method">
+      <div class="container is-max-desktop">
+        <div class="hero-body">
+          <p class="equalized-text">
+            This research has successfully introduced DynamicImportance, a methodical enhancement for the InstructDiffusion model which dynamically assigns importance to the words within textual prompts. This approach refines the cross-attention mechanisms within the model, ensuring that critical textual elements are emphasized during the image editing process. The effectiveness of DynamicImportance in enhancing the precision and contextual relevance of output images represents a significant advance in text-driven image editing technologies. Our methodology builds on the foundational concepts of Attend-and-Excite by optimizing attention distributions to selectively amplify features that are crucial for a given task, while suppressing irrelevant information. This selective attention mechanism is crucial for tasks that require high fidelity and nuanced interpretation of textual instructions to generate visually coherent images. By integrating DynamicImportance into InstructDiffusion, we have demonstrated that it is possible to significantly boost the model’s performance, making it not only more accurate but also more responsive to the subtleties of human language. The experimental results underscore the robustness of our approach. Through those we have shown that DynamicImportance improves the model's ability to interpret complex instructions, leading to outputs that are not only more accurate but also artistically and contextually aligned with the input prompts. This enhancement in performance is particularly evident in the model's ability to handle intricate editing tasks that traditional diffusion models often struggle with. Furthermore, this research has explored the implications of enhanced attention mechanisms in AI-driven systems, suggesting that similar approaches could be beneficial across various applications in computer vision and beyond. The ability of DynamicImportance to refine model outputs based on textual analysis could be extended to other areas such as automated content generation, real-time video editing, and other interactive tools, where precision and context sensitivity are paramount.
+          </p>
+        </div>
+      </div>
+    </section>
+  </div>
+</section>
+
+
+
+
+<section class="section" id="Future Research Directions">
+  <div class="container is-max-desktop content">
+    <h2 class="title">Future Research Directions</h2>
+    <section class="hero method">
+      <div class="container is-max-desktop">
+        <div class="hero-body">
+          <ul>
+            <li>
+              <strong>Enhanced Human Alignment for Accuracy</strong>
+              <p>The next phase of development will deepen the model's human alignment processes, involving sophisticated human-in-the-loop feedback systems during training. This approach will harness qualitative human judgments to fine-tune the model, enhancing its precision and context sensitivity. Such enhancements will make the model an even more powerful tool for AI-driven image editing by refining its ability to interpret complex text instructions based on real-time feedback.</p>
+            </li>
+            <li>
+              <strong>Optimization for Speed and Efficiency</strong>
+              <p>Optimizing the overall speed and efficiency of the InstructDiffusion model becomes crucial. Efforts will be directed towards streamlining the model’s architecture and refining the diffusion process to reduce computational overhead without compromising output quality. This will ensure the model remains practical for real-time applications, where quick turnarounds are essential.</p>
+            </li>
+            <li>
+              <strong>Learning Attention Tokens from Collected Data</strong>
+              <p>Further enhancing the model will involve learning and refining attention tokens based on user feedback and interaction data. By analyzing user interactions and adjustments that lead to the most satisfying results, the model can dynamically prioritize certain tokens, enhancing its responsiveness and effectiveness at interpreting textual instructions. This adaptive learning capability will evolve the system towards a more intuitive AI that can more accurately understand and anticipate user needs.</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+</section>
+
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <p> If you use our work in your research, please cite our publication: </p>
+    <pre><code>@article{DynamicImportance,
+    title={DynamicImportance: Interactive Assignment of Word Significance in a Generalist Vision Model},
+    author={Topuzyan, Meri and Khachatryan, Levon},
+    year={2024}
+  }
+    </code></pre>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <!-- FIX THE LINK -->
+      <a class="icon-link" href="https://arxiv.org/abs/2403.14773">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <!-- <a class="icon-link" href="https://github.com/keunhong" class="external-link" disabled> -->
+      <a class="icon-link" href="https://github.com/meritop98/DynamicImportance.github.io" class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            Website adapted from the following <a href="https://github.com/nerfies/nerfies.github.io">template</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
